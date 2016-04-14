@@ -36,4 +36,19 @@ root        65  0.0  0.1 124520  1392 ?        Ss   22:15   0:00 nginx: master p
  webappコンテナの初回起動時に`bundle install`で`gem`をインストールするので時間がかかります。
  
  
- 
+##### *注意*
+   development環境では通常controllerやmodelなどを変更してもrailsがファイルの変更を検知して、auto reloadしてくれるが、virtual box上のshared folderを経由してdocker-machineを使用している場合、ファイルの変更イベントが取れないため(shared folderの仕様らしい)その仕組を利用しているrailsのauto reloadも効かない。
+
+   そのため、`config/environments/development.rb`で`config.file_watcher`にデフォルトで設定されている`ActiveSupport::EventedFileUpdateChecker`ではなく、polling形式でファイルの変更を検知する`ActiveSupport::FileUpdateChecker`に変更している。
+
+   ただしdocker-machineのVMの時刻とローカルの時刻が異なっている場合(docker-machineの方が遅れている場合)ファイルの変更検知がやはりうまくいかない(変更日が未来日のファイルは異常とみなして検知対象にならないような処理になっている)ので、その場合はvirtual boxのゲストとホストの時刻同記事のズレのしきい値を低くして対応する。
+  
+   `docker-machine ssh`でログインして
+
+   ```
+   sudo VBoxControl guestproperty set "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold" 5000
+   ```
+
+   でゲスト、ホストとのズレが最大５秒になる
+
+
