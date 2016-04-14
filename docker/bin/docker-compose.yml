@@ -20,6 +20,4 @@ webapp:
   environment:
     RAILS_DATABASE_HOST : mysql
   command: /var/scripts/start_webapp.sh
-#  command: sh -c "cd /var/data && bundle install && bundle exec rails s -b 0.0.0.0 --pid /tmp/puma.pid"
-
 
