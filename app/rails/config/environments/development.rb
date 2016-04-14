@@ -58,5 +58,17 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  #
+  # docker-machineのshared_folderでホストとファイル共有している場合ファイルが変更されても
+  # 自動検出されないのでEventedでなくpolling方式のFileUpdateCheckerでwatchするようにする
+  # この際、docker-machineとローカルの日付がずれているとうまくファイルの変更を検知してくれない場合があるため、
+  # ずれいている場合はdocker-machine ssh でゲストOSに入り
+  #  sudo VBoxControl guestproperty set "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold" 5000
+  # でホストとの時刻の差のしきい値を下げる(ここでは５秒)
+  # virtual box以外の場合は別途調査
+  #config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.file_watcher = ActiveSupport::FileUpdateChecker
+
+  #web-console setting
+  config.web_console.whitelisted_ips = %w( 0.0.0.0/0 ::/0 )
 end
