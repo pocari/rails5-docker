@@ -14,8 +14,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
         libyaml-dev \
         zlib1g-dev \
         libmysqld-dev \
-        vim-tiny \
-        nodejs
+        vim-tiny
+
+############################################################
+# node install
+RUN curl -sL https://deb.nodesource.com/setup_5.x | bash -
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install nodejs
 
 ############################################################
 # ruby install
