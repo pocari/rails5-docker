@@ -11,5 +11,13 @@ module App
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    config.time_zone = 'Tokyo'
+    config.active_record.default_timezone = :local
+
+    # 日本語化
+    I18n.enforce_available_locales = true
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+    config.i18n.default_locale = :ja
   end
 end
