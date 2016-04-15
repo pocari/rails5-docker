@@ -47,6 +47,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
 # monit install
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install monit
 
+############################################################
+# git install (for gem install)
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git
+
 #####################################################
 # add scripts
 ADD resources/monit.d /etc/monit/conf.d
