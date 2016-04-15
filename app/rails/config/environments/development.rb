@@ -71,4 +71,7 @@ Rails.application.configure do
 
   #web-console setting
   config.web_console.whitelisted_ips = %w( 0.0.0.0/0 ::/0 )
+
+  #redis setting
+  config.session_store :redis_store, servers: 'redis://redis:6379/0', expire_in: 1.day
 end

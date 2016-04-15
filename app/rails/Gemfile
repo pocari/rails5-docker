@@ -31,6 +31,13 @@ gem 'jbuilder', '~> 2.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Use redis for session store
+# gem 'redis-rails', '>= 4.0.0'
+# rails5にまだ対応してないみたいなのでmasterから最新持ってくる
+gem 'redis-rack', git: 'https://github.com/redis-store/redis-rack', branch: 'master'
+gem 'redis-actionpack', git: 'https://github.com/redis-store/redis-actionpack', branch: 'master'
+gem 'redis-rails', git: 'https://github.com/redis-store/redis-rails', branch: 'master'
+
 group :development, :test do
   # pry関連(デバッグなど便利)
   gem 'pry-rails'    # rails cの対話式コンソールがirbの代わりにリッチなpryになる
